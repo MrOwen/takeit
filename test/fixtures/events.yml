@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  datetime: MyString
+  poster: 1
+  taker: 1
+  taken_datetime: MyString
+
+two:
+  datetime: MyString
+  poster: 1
+  taker: 1
+  taken_datetime: MyString
