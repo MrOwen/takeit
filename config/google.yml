@@ -1,0 +1,7 @@
+development:
+    app_id: "401321467006-kf6fnhlheessgb232b5bplgtcaqdnagk.apps.googleusercontent.com"
+    secret: Zm3FzxtMqz3pGN-PmjnRXZpm
+
+production:
+    app_id: "401321467006-kf6fnhlheessgb232b5bplgtcaqdnagk.apps.googleusercontent.com"
+    secret: "Zm3FzxtMqz3pGN-PmjnRXZpm"
