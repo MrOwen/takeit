@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="takeit">
 	<head>
 		<title>Bootstrap 101 Template</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 		<style>
 			table { table-layout:fixed; }
 			td { width:14%; }
 			td.cal-day-number { padding:0px; }
 			.cal-day-content { padding:8px; }
 		</style>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
 	</head>
 	<body>
 		<div class="navbar navbar-static-top navbar-inverse">
@@ -31,56 +35,18 @@
 								<th>Saturday</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody ng-controller="CalCtrl">
 							<tr>
-								<td class="cal-day-number">
-									<div class="label">17</div>
+								<td class="cal-day-number" ng-repeat="day in days | limitTo:7">
+									<div class="label">{{dateExtract(day)}}</div>
 									<div class="cal-day-content">
-										<a href="#" id="shift1" class="btn btn-block btn-primary" data-toggle="popover" data-content="Would you like to take Owen Kuemerle shift?" data-original-title="Take this shift?">7-9am Shift</a>
-										<a href="#" id="shift2" class="btn btn-block btn-primary" data-toggle="popover" data-content="Would you like to take Owen Kuemerle shift?" data-original-title="Take this shift?">12-2pm Shift</a>
-										<a href="#" id="shift3" class="btn btn-block btn-primary" data-toggle="popover" data-content="Would you like to take Owen Kuemerle shift?" data-original-title="Take this shift?">9-11pm Shift</a>
+										<a href="#" id="shift1" ng-repeat="shift in shiftsExtract(day)" class="btn btn-block {{buttonColorer(shift)}}" data-toggle="popover" data-original-title="Take this shift?" data-content="Would you like to take Owen Kuemerle's shift?">{{shift.start_date | date:'h:mm'}}-{{shift.end_date | date:'h:mm a'}}</a>
 									</div>
-								</td>
-								<td class="cal-day-number">
-									<div class="label">18</div>
-								</td>
-								<td class="cal-day-number">
-									<div class="label">19</div>
-								</td>
-								<td class="cal-day-number">
-									<div class="label">20</div>
-								</td>
-								<td class="cal-day-number">
-									<div class="label">21</div>
-								</td>
-								<td class="cal-day-number">
-									<div class="label">22</div>
-								</td>
-								<td class="cal-day-number">
-									<div class="label">23</div>
 								</td>
 							</tr>
 							<tr>
-								<td>
-									<div class="label">24</div>
-								</td>
-								<td>
-									<div class="label">25</div>
-								</td>
-								<td>
-									<div class="label">26</div>
-								</td>
-								<td>
-									<div class="label">27</div>
-								</td>
-								<td>
-									<div class="label">28</div>
-								</td>
-								<td>
-									<div class="label">29</div>
-								</td>
-								<td>
-									<div class="label">30</div>
+								<td class="cal-day-number" ng-repeat="day in days | limitTo:-7">
+									<div class="label">{{dateExtract(day)}}</div>
 								</td>
 							</tr>
 						</tbody>
@@ -88,19 +54,13 @@
 				</div>
 			</div>
 		</div>
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-		
+
 		<script>
-			$(function (){
-				$("a[data-toggle=popover]").popover({
-					html: true,
-					placement: "right",
-					trigger: "click",
-					container: "body"}).click(function(e) {
-        	e.preventDefault()
-      	})
-			});
+			//Angular.js codes
+			//Define an Angular module for takeIt
+			var takeIt = angular.module('takeit', ['takeIt.filters']);
 		</script>
+		<script src="app.js"></script>
+		<script src="popoverHandler.js"></script>
 	</body>
 </html>

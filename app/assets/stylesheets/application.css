@@ -11,3 +11,9 @@
  *= require_self
  *= require_tree .
  */
+body { padding-top: 15px; }
+.takeit-header { margin-bottom: 15px; }
+table { table-layout:fixed; }
+td { width:14%; }
+td.cal-day-number { padding:0px; }
+.cal-day-content { padding:8px; }

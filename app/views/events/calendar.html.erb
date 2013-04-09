@@ -1,0 +1,33 @@
+<div class="row-fluid">
+	<div class="span12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Sunday</th>
+					<th>Monday</th>
+					<th>Tuesday</th>
+					<th>Wednesday</th>
+					<th>Thursday</th>
+					<th>Friday</th>
+					<th>Saturday</th>
+				</tr>
+			</thead>
+			<tbody ng-controller="CalCtrl">
+				<tr>
+					<td class="cal-day-number" ng-repeat="day in days | limitTo:7">
+						<div class="label">{{dateExtract(day)}}</div>
+						<div class="cal-day-content">
+							<a href="#" id="shift1" ng-repeat="shift in shiftsExtract(day)" class="btn btn-block {{buttonColorer(shift)}}" data-toggle="popover" data-original-title="Take this shift?" data-content="Would you like to take Owen Kuemerle's shift?">{{shift.start_date | date:'h:mm'}}-{{shift.end_date | date:'h:mm a'}}</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="cal-day-number" ng-repeat="day in days | limitTo:-7">
+						<div class="label">{{dateExtract(day)}}</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+

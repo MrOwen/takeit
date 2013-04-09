@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Takeit</title>
+  <title>Takeit!</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<div class="container">
+		<div class="row-fluid takeit-header">
+			<div class="span12">
+				<%# flash.each do |name, msg| %>
+					<%#= content_tag :div, msg, id: "flash_#{name}" %>
+				<%# end %>
+				<% if current_user %>
+					<div class="pull-right">Hi <%= current_user.name %>!<br /><%= link_to "Sign out?", signout_path %></div>
+				<% else %>
+					<div class="pull-right"><%= link_to "Login with Google", "auth/google_oauth2", class: "btn btn-info" %></div>
+				<% end %>
+			</div>
+		</div>
+		<%= yield %>
+	</div>
 
-<%= yield %>
-
+<script>
+	//Angular.js codes
+	//Define an Angular module for takeIt
+	var takeIt = angular.module('takeit', ['takeIt.filters']);
+</script>
+<script src="/app.js"></script>
+<script src="/popoverHandler.js"></script>
 </body>
 </html>
