@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :role
+  attr_accessible :role, :name, :email, :provider, :uid, :avatar_url
 
   has_many :events, foreign_key: 'poster'
   has_many :events_taken, class_name: 'Event', foreign_key: 'taker'

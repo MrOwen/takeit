@@ -8,7 +8,6 @@ takeIt.controller('CalCtrl', function CalCtrl($scope) {
 		dataType: "json",
 		async: false
 	}).responseText).calendar_days;
-	console.log("Got first json data");
 
 	var shifts = $scope.shifts = jQuery.parseJSON($.ajax("/cal_data", {
 		dataType: "json",
@@ -36,10 +35,6 @@ takeIt.controller('CalCtrl', function CalCtrl($scope) {
 		// }
 		return "btn-primary";
 	};
-
-	console.log($scope.buttonColorer(shifts["2013-03-23"][1]));
-	console.log(days);
-	console.log($scope.shiftsExtract("2013-03-18"));
 });
 
 // //ShiftCtrl deals with shift data
