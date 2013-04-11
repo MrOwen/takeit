@@ -24,6 +24,7 @@
 				<tr>
 					<td class="cal-day-number" ng-repeat="day in days | limitTo:-7">
 						<div class="label">{{dateExtract(day)}}</div>
+						<a href="#" id="shift1" ng-repeat="shift in shiftsExtract(day)" class="btn btn-block {{buttonColorer(shift)}}" data-toggle="popover" data-original-title="Take this shift?" data-content="Would you like to take {{shift.poster}}'s shift?">{{shift.start_date | date:'h:mm'}}-{{shift.end_date | date:'h:mm a'}}</a>
 					</td>
 				</tr>
 			</tbody>
