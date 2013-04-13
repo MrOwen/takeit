@@ -20,8 +20,8 @@ module EventHelper
 					start_date: e.start_datetime,
 					end_date: e.end_datetime,
 					date_taken: e.taken_datetime,
-					poster: get_poster(e),
-					taker: get_taker(e)
+					poster: e.poster.nil? ? nil : e.poster.name,
+					taker: e.taker.nil? ? nil : e.taker.name
 				}
 			end
 
@@ -31,21 +31,5 @@ module EventHelper
 		setup[:shifts] = shifts_array
 		setup[:calendar_days] = days_array
 		setup.to_json.html_safe
-	end
-
-	def get_poster(user)
-		if user.poster.nil?
-			return ""
-		else
-			return user.poster.name
-		end
-	end
-
-	def get_taker(user)
-		if user.taker.nil?
-			return ""
-		else
-			return user.taker.name
-		end
 	end
 end
