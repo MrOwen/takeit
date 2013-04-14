@@ -8,25 +8,17 @@ module EventHelper
 		shifts_array = {}
 		curr_date = start_date - start_date.wday
 		next_week = curr_date.next_day(13)
-		while curr_date <= next_week do
-			days_array << curr_date.to_s
-
-			shifts_array[curr_date.to_s] = []
-			#This is a bit of a tricky query to select the shifts on the iterator's current date
-			#Determine the current iterator date and see if there are any matches in the DB whose start date
-			# is between the current date at time 00:00 and the day after at 00:00
-			Event.where(:start_datetime => (curr_date.to_datetime.to_s)..(curr_date.next.to_datetime.to_s)).each do |e|
-				shifts_array[curr_date.to_s] << {
-					start_date: e.start_datetime,
-					end_date: e.end_datetime,
-					date_taken: e.taken_datetime,
-					poster: e.poster.nil? ? nil : e.poster.name,
-					taker: e.taker.nil? ? nil : e.taker.name
-				}
-			end
-
-			#Add a day to the current iterator date
-			curr_date = curr_date.next
+		days_array << (curr_date..next_week).to_a
+		Event.where(:start_datetime => (curr_date.to_datetime.to_s)..(next_week.next.to_datetime.to_s)).each do |e|
+			curr_date = Date.rfc3339(e.start_datetime).to_s
+			# If the current event's date isn't an element in the shifts array, we create and populate it
+			(shifts_array[curr_date].nil? ? shifts_array[curr_date] = [] : shifts_array[curr_date]) << {
+				start_date: e.start_datetime,
+				end_date: e.end_datetime,
+				date_taken: e.taken_datetime,
+				poster: e.poster.nil? ? nil : e.poster.name,
+				taker: e.taker.nil? ? nil : e.taker.name
+			}
 		end
 		setup[:shifts] = shifts_array
 		setup[:calendar_days] = days_array
