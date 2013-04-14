@@ -6,7 +6,7 @@ Takeit::Application.routes.draw do
   match "signout", to: "sessions#destroy", as: "signout"
 
   match "calendar", to: 'events#calendar', as: "calendar"
-  match "cal_data", to: 'events#calendar', format: "json"
+  match "cal_data.json", to: 'events#calendar', format: "json"
   #match "cal_data.json", to: 'events#index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
