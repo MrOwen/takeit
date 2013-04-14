@@ -4,11 +4,10 @@ module EventHelper
 	#For now, it's not used, so it can just be set to nil by default
 	def json_days_shifts(start_date, end_date = nil)
 		setup = {}
-		days_array = []
 		shifts_array = {}
 		curr_date = start_date - start_date.wday
 		next_week = curr_date.next_day(13)
-		days_array << (curr_date..next_week).to_a
+		days_array = (curr_date..next_week).to_a
 		Event.where(:start_datetime => (curr_date.to_datetime.to_s)..(next_week.next.to_datetime.to_s)).each do |e|
 			curr_date = Date.rfc3339(e.start_datetime).to_s
 			# If the current event's date isn't an element in the shifts array, we create and populate it
