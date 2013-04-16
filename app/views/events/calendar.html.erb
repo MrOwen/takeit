@@ -12,7 +12,7 @@
 					<th>Saturday</th>
 				</tr>
 			</thead>
-			<tbody ng-controller="CalCtrl">
+			<tbody ng-controller="CalCtrl" class="popover-handler">
 				<tr>
 					<td class="cal-day-number" ng-repeat="day in days | limitTo:7">
 						<div class="label">{{dateExtract(day)}}</div>
@@ -37,7 +37,7 @@
 <script>
 	//Angular.js codes
 	//Define an Angular module for takeIt
-	var takeIt = angular.module('takeit', ['takeIt.filters']);
+	var takeIt = angular.module('takeit', ['takeIt.filters', 'takeIt.controllers', 'takeIt.directives']);
 </script>
 <%= javascript_include_tag 'takeit' %>
-<%= javascript_include_tag 'popover_handler' %>
+<%# javascript_include_tag 'popover_handler' %>

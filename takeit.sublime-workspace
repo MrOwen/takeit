@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"star",
+				"start_date"
+			],
+			[
+				"next",
+				"next_week"
+			],
+			[
+				"curr",
+				"curr_date"
+			],
+			[
+				"start",
+				"start_datetime"
+			],
+			[
+				"end",
+				"end_date"
+			],
+			[
+				"shifts",
+				"shifts_array"
+			],
+			[
+				"ma",
+				"margin-bottom"
+			],
+			[
 				"class",
 				"class_name"
 			],
@@ -52,43 +80,11 @@
 	"buffers":
 	[
 		{
-			"file": "config/routes.rb",
+			"file": "app/views/layouts/application.html.erb",
 			"settings":
 			{
-				"buffer_size": 2011,
+				"buffer_size": 970,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/controllers/sessions_controller.rb",
-			"settings":
-			{
-				"buffer_size": 285,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/index.new.html",
-			"settings":
-			{
-				"buffer_size": 2330,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/app.js",
-			"settings":
-			{
-				"buffer_size": 2008,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "public/data.json",
-			"settings":
-			{
-				"buffer_size": 1275,
-				"line_ending": "Windows"
 			}
 		},
 		{
@@ -98,15 +94,6 @@
 				"buffer_size": 245,
 				"line_ending": "Windows",
 				"name": "'use strict';"
-			}
-		},
-		{
-			"contents": "Adblock\nAdblock element hiding helper\nFlagfox\nGmelius\nGreasemonkey\n	https://github.com/ihavenoface/4chan-x/raw/stable/4chan_x.user.js\n	AdsSkipper\n	Bytingshark\n	Gmail, Greader, Gvoice favicon alerts\n	Grooveshark pirated edition\n	Outlook no ads\n	Torrentz all-in-one\n	YouTube Center\nLastPass\nPDF Viewer\nRES\nSPDY indicator\nStatus-4-evar",
-			"settings":
-			{
-				"buffer_size": 332,
-				"line_ending": "Windows",
-				"name": "Adblock"
 			}
 		},
 		{
@@ -127,42 +114,45 @@
 			}
 		},
 		{
-			"file": "config/initializers/omniauth.rb",
+			"file": "app/controllers/events_controller.rb",
 			"settings":
 			{
-				"buffer_size": 339,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/views/layouts/application.html.erb",
-			"settings":
-			{
-				"buffer_size": 515,
+				"buffer_size": 153,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/views/users/index.html.erb",
+			"file": "app/views/events/calendar.html.erb",
 			"settings":
 			{
-				"buffer_size": 25,
+				"buffer_size": 1615,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "app/controllers/application_controller.rb",
+			"file": "app/helpers/event_helper.rb",
 			"settings":
 			{
-				"buffer_size": 213,
+				"buffer_size": 1055,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/popoverHandler.js",
+			"contents": "//---------------\n// Controllers\n//---------------\n\n//CalCtrl controller deals with the calendar dates\ntakeIt.controller('CalCtrl', function CalCtrl($scope) {\n	var days = $scope.days = jQuery.parseJSON($.ajax(\"/cal_data\", {\n		dataType: \"json\",\n		async: false\n	}).responseText).calendar_days;\n\n	var shifts = $scope.shifts = jQuery.parseJSON($.ajax(\"/cal_data\", {\n		dataType: \"json\",\n		async: false\n	}).responseText).shifts;\n\n	$scope.shiftsExtract = function(date) {\n		return shifts[date];\n	};\n\n	$scope.dateExtract = function(date) {\n		return moment(date).date();\n	};\n\n	$scope.buttonColorer = function(shift) {\n		console.log(moment(shift.start_date).subtract('days', 1).hour());\n		if (shift.taker === null && moment().from(moment(shift.start_date).subtract('days', 1)).hour() < 24) {\n			// console.log(\"The shift date is: \" + moment(shift.start_date).format() + \" and +1 day from that is: \" + moment(shift.start_date).add('days', 1).format());\n			// console.log(\"The shift taker is: \" + shift.taker);\n			return \"btn-primary\";\n		} else if (shift.taker === null) {\n			return \"btn-warning\";\n		} else {\n			return \"btn-success\";\n		}\n		return \"btn-primary\";\n	};\n});\n\n// //ShiftCtrl deals with shift data\n// takeIt.Controller('ShiftCtrl', function ShiftCtrl($scope) {\n\n// });\n\n//---------------\n// Filters\n//---------------\n\n//Wraps moment.js functions that TakeIt needs\nangular.module('takeIt.filters', []).\n	filter('dateExtract', function() {\n		return function(dates) {\n			var extractedDates = [];\n			angular.forEach(dates, function(date) {\n				extractedDates.push(moment(date, \"YYYY-MM-DD\").date());\n			}, extractedDates);\n			console.log(extractedDates);\n			return extractedDates;\n		};\n	});\n\n//---------------\n// Directives\n//---------------\n\n\n//---------------\n// Services\n//---------------\n\n//Right now, we're only dealing with the mock json content\n",
+			"file": "app/assets/javascripts/takeit.js",
+			"file_size": 1947,
+			"file_write_time": 130100538719884658,
 			"settings":
 			{
-				"buffer_size": 1636,
+				"buffer_size": 1846,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/data.old.json",
+			"settings":
+			{
+				"buffer_size": 1430,
 				"line_ending": "Windows"
 			}
 		}
@@ -170,9 +160,13 @@
 	"build_system": "Packages/Nodejs/Nodejs.sublime-build",
 	"command_palette":
 	{
-		"height": 380.0,
+		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"brow",
+				"Preferences: Browse Packages"
+			],
 			[
 				"package",
 				"Package Control: Upgrade/Overwrite All Packages"
@@ -230,7 +224,7 @@
 				"Nodejs::Build Completions"
 			]
 		],
-		"width": 416.0
+		"width": 512.0
 	},
 	"console":
 	{
@@ -247,29 +241,67 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/routes.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/public/data.old.json",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/javascripts/application.js",
+		"/C/Users/Owen/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/javascripts/takeit.js",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/public/index.new.html",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/javascripts/popover_handler.js",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/stylesheets/application.css",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/db/seeds.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/application.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/models/user.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/environments/development.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/environments/production.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/.gitignore",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/models/event.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/javascripts/popover_handler",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/public/popoverHandler.js",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/public/app.js",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/config/routes.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/Gemfile",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/controllers/users_controller.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/controllers/static_pages_controller.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/controllers/sessions_controller.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/controllers/application_controller.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/views/events/index.json.erb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/initializers/rails_footnotes.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/javascripts/app.js",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/javascripts/event.js",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/javascripts/user.js",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/controllers/application_controller.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/helpers/event_helper.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/controllers/sessions_controller.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/controllers/users_controller.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/views/users/login.html.erb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/views/events/calendar.html.erb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/public/data.json",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/initializers/omniauth.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/layouts/application.html.erb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/layouts/_shim.html.erb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/views/users/index.html.erb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/stylesheets/zocial.css",
+		"/C/Users/Owen/Downloads/bootstrap/js/bootstrap.min.js",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/helpers/application_helper.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/google.yml",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/initializers/google.rb",
+		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/environment.rb",
+		"/C/Users/Owen/AppData/Local/Temp/scp33146/etc/nginx/sites-available/main_domains.conf",
+		"/C/Users/Owen/AppData/Local/Temp/scp47812/var/log/nginx/scarletcdn_com_access.log",
+		"/C/Users/Owen/AppData/Local/Temp/scp47377/var/log/nginx/scarletcdn_com_error.log",
 		"/C/Windows/System32/Drivers/etc/hosts",
 		"/C/Users/Owen/AppData/Roaming/Mozilla/Firefox/Profiles/2tl39o4g.default/jetpack/jid1-xUfzOsOFlzSOXg@jetpack/simple-storage/store.json",
 		"/C/Users/Owen/AppData/Roaming/Mozilla/Firefox/Profiles/2tl39o4g.default/gm_scripts/4chan_x/4chan_x.user.js",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/environments/development.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/models/user.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/models/event.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/db/migrate/20130408060830_add_avatar_to_user.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/db/migrate/20130317194745_create_events.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/db/migrate/20130317192235_create_users.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/db/migrate/20130408054221_add_omniauth_user_details.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/db/migrate/20130408054200_redo_taken_posted_shift_times.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/controllers/users_controller.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/controllers/application_controller.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/google.yml",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/initializers/google.rb",
 		"/C/Users/Owen/Desktop/hosts",
 		"/C/END",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/config/environment.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/views/user/index.html.erb",
 		"/C/Users/Owen/Downloads/8263f4358f391a9a9526fc8d196d59b05dbf93a0-privatekey.p12",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/controllers/users_controller.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/controllers/static_pages_controller.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/Gemfile",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/controllers/user_controller.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/demo_app/app/controllers/users_controller.rb",
 		"/C/Users/Owen/Downloads/client_secrets.json",
@@ -279,8 +311,6 @@
 		"/C/Users/Owen/Downloads/angular-seed-master/app/js/filters.js",
 		"/C/Users/Owen/Downloads/angular-seed-master/app/js/directives.js",
 		"/C/Users/Owen/Downloads/angular-seed-master/app/js/app.js",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/public/data.json",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/public/popoverHandler.js",
 		"/C/Users/Owen/Downloads/angular-seed-master/README.md",
 		"/C/Users/Owen/Downloads/angular-seed-master/app/index-async.html",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/public/json/data.json",
@@ -290,10 +320,8 @@
 		"/C/Users/Owen/AppData/Local/Temp/scp13435/home/owen/gems/gems/debugger-1.1.3/ext/ruby_debug/gem_make.out",
 		"/C/Users/Owen/AppData/Local/Temp/scp27629/var/log/nginx/moodle_error.log",
 		"/C/Users/Owen/AppData/Local/Temp/scp04566/etc/nginx/sites-available/sub_domains.conf",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/db/seeds.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/mailers/.gitkeep",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/views/layouts/application.html.erb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/takeit/app/assets/javascripts/application.js",
 		"/C/Users/Owen/AppData/Roaming/Mozilla/Firefox/Profiles/2tl39o4g.default/gm_scripts/Outlook.com_Mail_unread_count_in_favicon._Outlook_2010_--_Ajax_version/160203.user.js",
 		"/C/Users/Owen/Downloads/quotation_manipulation.py",
 		"/C/Users/Owen/Downloads/no_vowels.py",
@@ -304,7 +332,6 @@
 		"/C/Users/Owen/AppData/Local/Temp/scp20734/var/canvas/config/routes.rb",
 		"/C/Users/Owen/.ssh/github_rsa.pub",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/helpers/static_pages_helper.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/controllers/sessions_controller.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/lib/tasks/sample_data.rake",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/users/index.html.erb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/helpers/sessions_helper.rb",
@@ -321,9 +348,6 @@
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/assets/stylesheets/custom.css.scss",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/layouts/_header.html.erb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/sessions/new.html.erb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/config/routes.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/controllers/application_controller.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/layouts/application.html.erb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/config/locales/en.yml",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/assets/javascripts/application.js",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/db/migrate/20130213181949_add_remember_token_to_users.rb",
@@ -344,37 +368,7 @@
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/sample_project.sublime-project",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/config/environments/test.rb",
 		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/helpers/application_helper.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/static_pages/home.html.erb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/.travis.yml",
-		"/C/Users/Owen/AppData/Local/Temp/$$_57789/control.tar.gz",
-		"/C/Users/Owen/AppData/Local/Temp/$$_51513/debian-binary",
-		"/C/Users/Owen/Documents/GitHub/hubot/Makefile",
-		"/C/Users/Owen/Documents/GitHub/hubot/.gitignore",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/db/migrate/20130130204358_add_password_digest_to_users.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/db/schema.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/db/migrate/20130130203422_add_index_to_users_email.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/db/migrate/20130130181558_create_users.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/db/migrate/20130130203012_add_index_to_users_email.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/spec/requests/static_pages_spec.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/spec/helpers/application_helper_spec.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/spec/utilities.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/layouts/_footer.html.erb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/static_pages/contact.html.erb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/layouts/_shim.html.erb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/example_user.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/static_pages/help.html.erb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/static_pages/about.html.erb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/public/index.html",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/demo_app/config/routes.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/public/hello.html",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/README.rdoc",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/.gitignore",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/demo_app/.gitignore",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/demo_app/app/models/micropost.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/demo_app/app/models/user.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/demo_app/Gemfile",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/demo_app/app/controllers/application_controller.rb",
-		"/C/Users/Owen/Documents/GitHub/rails_projects/demo_app/app/controllers/microposts_controller.rb"
+		"/C/Users/Owen/Documents/GitHub/rails_projects/sample_app/app/views/static_pages/home.html.erb"
 	],
 	"find":
 	{
@@ -402,6 +396,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"		\n",
+			"precompile",
+			"		\n",
+			"				\n",
+			"			\n",
 			"key",
 			"		\n",
 			"todomvc",
@@ -492,23 +491,23 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "config/routes.rb",
+					"file": "app/views/layouts/application.html.erb",
 					"settings":
 					{
-						"buffer_size": 2011,
+						"buffer_size": 970,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								197,
-								197
+								288,
+								288
 							]
 						],
 						"settings":
@@ -601,9 +600,7 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Ruby/Ruby.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -613,378 +610,6 @@
 				},
 				{
 					"buffer": 1,
-					"file": "app/controllers/sessions_controller.rb",
-					"settings":
-					{
-						"buffer_size": 285,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								274,
-								274
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "public/index.new.html",
-					"settings":
-					{
-						"buffer_size": 2330,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1618,
-								1618
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "public/app.js",
-					"settings":
-					{
-						"buffer_size": 2008,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1355,
-								1355
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "public/data.json",
-					"settings":
-					{
-						"buffer_size": 1275,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								919,
-								919
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
 					"settings":
 					{
 						"buffer_size": 245,
@@ -1098,33 +723,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"settings":
-					{
-						"buffer_size": 332,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								279,
-								279
-							]
-						],
-						"settings":
-						{
-							"auto_name": "Adblock",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
+					"buffer": 2,
 					"settings":
 					{
 						"buffer_size": 2895,
@@ -1232,13 +831,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 45.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 3,
 					"settings":
 					{
 						"buffer_size": 1672,
@@ -1347,279 +946,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 431.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "config/initializers/omniauth.rb",
-					"settings":
-					{
-						"buffer_size": 339,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								37,
-								37
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage"
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 10,
-					"file": "app/views/layouts/application.html.erb",
+					"buffer": 4,
+					"file": "app/controllers/events_controller.rb",
 					"settings":
 					{
-						"buffer_size": 515,
+						"buffer_size": 153,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								402,
-								402
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "app/views/users/index.html.erb",
-					"settings":
-					{
-						"buffer_size": 25,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								25,
-								25
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": false,
-							"sublimelinter_mark_style": "outline",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "app/controllers/application_controller.rb",
-					"settings":
-					{
-						"buffer_size": 213,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								196,
-								196
+								148,
+								148
 							]
 						],
 						"settings":
@@ -1721,11 +1066,356 @@
 					"type": "text"
 				},
 				{
-					"buffer": 13,
-					"file": "public/popoverHandler.js",
+					"buffer": 5,
+					"file": "app/views/events/calendar.html.erb",
 					"settings":
 					{
-						"buffer_size": 1636,
+						"buffer_size": 1615,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								812,
+								812
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/helpers/event_helper.rb",
+					"settings":
+					{
+						"buffer_size": 1055,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1055,
+								1055
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/assets/javascripts/takeit.js",
+					"settings":
+					{
+						"buffer_size": 1846,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1125,
+								1125
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": false,
+							"sublimelinter_mark_style": "outline",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 225.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "public/data.old.json",
+					"settings":
+					{
+						"buffer_size": 1430,
 						"regions":
 						{
 						},
@@ -1826,8 +1516,9 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
