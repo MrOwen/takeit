@@ -1,0 +1,18 @@
+<p>Enter the information below and we'll let other people know about your shift!</p>
+
+<p>
+	<form data-persist="garlic" ng-submit="addShift()">
+		<input type="text" id="start-time" class="input-mini" /> to 
+		<input type="text" id="end-time" class="input-mini" />
+		<input class="btn btn-primary" type="submit" value="Submit">
+	</form>
+</p>
+
+<p>
+	This shift will be submitted for: {{day}}
+</p>
+
+<script type="text/javascript">
+	$('#start-time').timepicker({'scrollDefaultNow': true });
+	$('#end-time').timepicker({'scrollDefaultNow': true });
+</script>
