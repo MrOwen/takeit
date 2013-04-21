@@ -91,6 +91,7 @@ angular.module('takeIt.directives', ['takeIt.directives.directionSetter']).
 
 			$("html").click(function() {
 				scope.dismiss();
+				$(".time-picker").timepicker('hide');
 			});
 
 			element.click(function(event) {
