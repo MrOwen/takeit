@@ -8,7 +8,6 @@ angular.module('takeIt.controllers', []).
 		$http.get('/cal_data.json').success(function(data) {
 			days = $scope.days = data.calendar_days;
 			shifts = $scope.shifts = data.shifts;
-			console.log(shifts);
 		});
 
 		$scope.shiftsExtract = function(date) {
@@ -20,18 +19,43 @@ angular.module('takeIt.controllers', []).
 		};
 
 		$scope.buttonColorer = function(shift) {
-			console.log(moment(shift.start_date).subtract('days', 1).hour());
-			if (shift.taker === null && moment().from(moment(shift.start_date).subtract('days', 1)).hour() < 24) {
-				// console.log("The shift date is: " + moment(shift.start_date).format() + " and +1 day from that is: " + moment(shift.start_date).add('days', 1).format());
-				// console.log("The shift taker is: " + shift.taker);
-				return "btn-primary";
-			} else if (shift.taker === null) {
-				return "btn-warning";
-			} else {
-				return "btn-success";
+			switch (shiftTriage(shift)) {
+				case "warn":
+					return "btn-warning";
+				case "upcoming":
+					return "btn-success";
+				case "taken":
+					return "btn-primary";
 			}
-			return "btn-primary";
+			return "";
 		};
+
+		$scope.getPopoverTitle = function(shift) {
+			switch (shiftTriage(shift)) {
+				case "warn":
+					return "Take this shift?";
+				case "upcoming":
+					return "Take this shift?";
+				case "taken":
+					return "Shift taken!";
+				case "passed":
+					return "Shift never taken";
+			}
+			return "Unknown status";
+		};
+
+		function shiftTriage(shift) {
+			if (shift.taker === null && (moment(shift.start_date).diff(moment(), 'hours') <= 24 && moment(shift.start_date).diff(moment(), 'hours') >= 0)) {
+				return "warn";
+			} else if (shift.taker === null && moment(shift.start_date).diff(moment(), 'hours') > 24) {
+				return "upcoming";
+			} else if (shift.taker !== null) {
+				return "taken";
+			} else if (moment(shift.end_date).diff(moment(), 'hours') < 0) {
+				return "passed";
+			}
+			return "unknown";
+		}
 	});
 
 // //ShiftCtrl deals with shift data
@@ -58,52 +82,29 @@ angular.module('takeIt.filters', []).
 //---------------
 // Directives
 //---------------
-angular.module('takeIt.directives', []).
+angular.module('takeIt.directives', ['takeIt.directives.directionSetter']).
 	directive('popoverHandler', function(){
 		var linker = function(scope, element, attrs) {
-			console.log("The linker was called");
-
-			$("a[data-toggle=popover]").popover({
-				html: true,
-				placement: "right",
-				trigger: "manual",
-				container: "body"})
-			//This prevents the browser from scrolling to the top on an empty anchor (#)
-			.click(function(e) {
+			element.click(function(e) {
 				e.preventDefault();
-			});
-
-			$("a[data-toggle=popover]").click(function() {
-				var popoverButton = $(this);
-				$(this).data('isActive', true);
-
-				//Don't re-show the popover animation if it's already visible
-				if(!$(".popover.fade.right.in").is(":visible")) {
-					popoverButton.popover('show');
-				}
-				clearTimeout(popoverButton.data('timeoutId'));
-			}).mouseout(function() {
-				var popoverButton = $(this);
-				//A timer used to hide the popover after some time
-				//Attached to the button as a function (.data())
-				var timeoutId = setTimeout(function() {
-					popoverButton.popover('hide');
-				}, 750);
-				//Start the timer to hide the popover because the mouse left the popover element
-				popoverButton.data('timeoutId', timeoutId);
-				$(".popover.fade.right.in").hover(function() {
-					clearTimeout(popoverButton.data('timeoutId'));
+			})
+			.mouseout(function() {
+				$(".popover.ng-scope.fade").hover(function() {
+					clearTimeout(element.data('timeoutId'));
 				}, function() {
-					//For whatever reason, timeoutId needs to be redefined in this scope
+					$('ul.ui-timepicker-list:visible').hover(function() {
+						clearTimeout(element.data('timeoutId'));
+					}, function() {
+						var timeoutId = setTimeout(function() {
+						scope.dismiss();
+						}, 2000);
+						element.data('timeoutId', timeoutId);
+					});
 					var timeoutId = setTimeout(function() {
-						popoverButton.popover('hide');
+						scope.dismiss();
 					}, 750);
-					popoverButton.data('timeoutId', timeoutId);
+					element.data('timeoutId', timeoutId);
 				});
-			});
-
-			$("body").on("mouseenter", ".popover.fade.right.in", function() {
-				clearTimeout($("a[data-toggle=popover]").data('timeoutId'));
 			});
 		};
 
@@ -113,6 +114,23 @@ angular.module('takeIt.directives', []).
 		};
 	});
 
+angular.module('takeIt.directives.directionSetter', []).
+	directive('popoverDirection', function() {
+		var linker = function(scope, element, attrs) {
+			var position = element.position();
+
+			if ($(window).width()-position.left < 400) {
+				attrs.$set("data-placement", "left");
+			} else {
+				attrs.$set("data-placement", "right");
+			}
+		};
+
+		return {
+			restrict: 'C',
+			link: linker
+		};
+	});
 
 //---------------
 // Services
