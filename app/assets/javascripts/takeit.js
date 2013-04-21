@@ -87,24 +87,6 @@ angular.module('takeIt.directives', ['takeIt.directives.directionSetter']).
 		var linker = function(scope, element, attrs) {
 			element.click(function(e) {
 				e.preventDefault();
-			})
-			.mouseout(function() {
-				$(".popover.ng-scope.fade").hover(function() {
-					clearTimeout(element.data('timeoutId'));
-				}, function() {
-					$('ul.ui-timepicker-list:visible').hover(function() {
-						clearTimeout(element.data('timeoutId'));
-					}, function() {
-						var timeoutId = setTimeout(function() {
-						scope.dismiss();
-						}, 2000);
-						element.data('timeoutId', timeoutId);
-					});
-					var timeoutId = setTimeout(function() {
-						scope.dismiss();
-					}, 750);
-					element.data('timeoutId', timeoutId);
-				});
 			});
 		};
 
