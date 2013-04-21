@@ -15,6 +15,7 @@ angular.module('takeIt.controllers', []).
 		};
 
 		$scope.dateExtract = function(date) {
+			//.date() actually resolves to the day of the month as a number
 			return moment(date).date();
 		};
 
