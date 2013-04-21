@@ -88,6 +88,18 @@ angular.module('takeIt.directives', ['takeIt.directives.directionSetter']).
 			element.click(function(e) {
 				e.preventDefault();
 			});
+
+			$("html").click(function() {
+				scope.dismiss();
+			});
+
+			element.click(function(event) {
+				event.stopPropagation();
+			});
+
+			$("html").on("click", ".popover, .ui-timepicker-list", function(event) {
+				event.stopPropagation();
+			});
 		};
 
 		return {
