@@ -3,7 +3,9 @@
 <head>
   <title>Takeit!</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag params[:controller] %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag params[:controller] %>
   <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js' %>
   <%= javascript_include_tag 'http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js' %>
   <%= csrf_meta_tags %>
