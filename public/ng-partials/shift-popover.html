@@ -1,3 +1,8 @@
-<p>Hey! This is just a test to see if the popover stuff works
-
-Would you like to take {{shift.poster}}'s shift?</p>
+<p><strong>{{shift.poster}}</strong> posted this shift</p>
+<div ng-show="shiftAllowTake(shift)">
+	<button class="btn btn-primary" ng-click="takeShift(shift);dismiss()"><i class="icon-ok icon-white"></i> Take shift</button>
+	<button class="btn" ng-click="dismiss()"><i class="icon-remove"></i> No thanks</button>
+</div>
+<div ng-show="shift.taker">
+	<p ng-show="shift.taker"><strong>{{shift.taker}}</strong> took this shift</p>
+</div>
