@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row-fluid" ng-controller="CalCtrl">
 	<div class="span12">
 		<table class="table table-bordered">
 			<thead>
@@ -12,7 +12,7 @@
 					<th>Saturday</th>
 				</tr>
 			</thead>
-			<tbody ng-controller="CalCtrl">
+			<tbody>
 				<tr>
 					<td class="cal-day-number" ng-repeat="day in days | limitTo:7">
 						<div ng-include="'/ng-partials/cell-contents.html'"></div>
@@ -31,7 +31,7 @@
 <script>
 	//Angular.js codes
 	//Define an Angular module for takeIt
-	var takeIt = angular.module('takeit', ['takeIt.filters', 'takeIt.controllers', 'takeIt.directives', '$strap.directives']);
+	var takeIt = angular.module('takeit', ['takeIt.filters', 'takeIt.controllers', '$strap.directives']);
 </script>
 <%= javascript_include_tag 'takeit' %>
 <%= javascript_include_tag 'angular-strap.min' %>
