@@ -10,6 +10,11 @@ angular.module('takeIt.controllers', []).
 			shifts = $scope.shifts = data.shifts;
 		});
 
+		postShiftData = $scope.postShiftData = {
+			"start_date": null,
+			"end_date": null
+		};
+
 		$scope.shiftsExtract = function(date) {
 			return shifts[date];
 		};
@@ -57,12 +62,23 @@ angular.module('takeIt.controllers', []).
 			}
 			return "unknown";
 		}
+
+		$scope.addShift = function() {
+			var shiftDate = moment(postShiftData.start_date).format("YYYY-MM-DD");
+			if (typeof shifts[shiftDate] == "undefined") {
+				shifts[shiftDate] = [];
+			}
+			shifts[shiftDate].push({
+				"start_date": postShiftData.start_date,
+				"end_date": postShiftData.end_date,
+				"date_taken": null,
+				"poster": "Owen sdjfhskjd",
+				"taker": null
+			});
+			postShiftData.start_date = null;
+			postShiftData.end_date = null;
+		};
 	});
-
-// //ShiftCtrl deals with shift data
-// takeIt.Controller('ShiftCtrl', function ShiftCtrl($scope) {
-
-// });
 
 //---------------
 // Filters
@@ -83,50 +99,94 @@ angular.module('takeIt.filters', []).
 //---------------
 // Directives
 //---------------
-angular.module('takeIt.directives', ['takeIt.directives.directionSetter']).
-	directive('popoverHandler', function(){
-		var linker = function(scope, element, attrs) {
-			element.click(function(e) {
-				e.preventDefault();
-			});
+takeIt.directive('popoverHandler', function(){
+	var linker = function(scope, element, attrs) {
+		element.click(function(e) {
+			e.preventDefault();
+		});
 
-			$("html").click(function() {
-				scope.dismiss();
-				$(".time-picker").timepicker('hide');
-			});
+		$("html").click(function() {
+			scope.dismiss();
+			$(".time-picker").timepicker('hide');
+		});
 
-			element.click(function(event) {
-				event.stopPropagation();
-			});
+		element.click(function(event) {
+			event.stopPropagation();
+		});
 
-			$("html").on("click", ".popover, .ui-timepicker-list", function(event) {
-				event.stopPropagation();
-			});
-		};
+		$("html").on("click", ".popover, .ui-timepicker-list", function(event) {
+			event.stopPropagation();
+		});
+	};
 
-		return {
-			restrict: 'C',
-			link: linker
-		};
-	});
+	return {
+		restrict: 'C',
+		link: linker
+	};
+});
 
-angular.module('takeIt.directives.directionSetter', []).
-	directive('popoverDirection', function() {
-		var linker = function(scope, element, attrs) {
-			var position = element.position();
+takeIt.directive('popoverDirection', function() {
+	var linker = function(scope, element, attrs) {
+		var position = element.position();
 
-			if ($(window).width()-position.left < 400) {
-				attrs.$set("data-placement", "left");
-			} else {
-				attrs.$set("data-placement", "right");
-			}
-		};
+		if ($(window).width()-position.left < 400) {
+			attrs.$set("data-placement", "left");
+		} else {
+			attrs.$set("data-placement", "right");
+		}
+	};
 
-		return {
-			restrict: 'C',
-			link: linker
-		};
-	});
+	return {
+		restrict: 'C',
+		link: linker
+	};
+});
+
+takeIt.directive('shiftStartTimePicker', function() {
+	var linker = function(scope, element, attrs, ngModelCtrl) {
+		//Initialize the timepicker
+		element.timepicker({ 'scrollDefaultNow': true });
+
+		element.change(function() {
+			var futureTime = moment(scope.day + $(this).val(), 'YYYY-MM-DDh:mma').add('hours', 2).toDate();
+			$('#end-time').timepicker('setTime', futureTime);
+			$('#end-time').timepicker('option', { 'durationTime': $(this).timepicker('getTime'), 'showDuration': true });
+			ngModelCtrl.$setViewValue(moment(scope.day + $(this).val(), 'YYYY-MM-DDh:mma').format());
+			// It's possible the end time was set in addition to the start time
+			//ngModelCtrl.$setViewValue(moment($('#end-time').timepicker('getTime')).format('h:mma'));
+			scope.$apply();
+		});
+	};
+
+	return {
+		require : 'ngModel',
+		restrict: 'C',
+		link: linker
+	};
+});
+
+takeIt.directive('shiftEndTimePicker', function() {
+	var linker = function(scope, element, attrs, ngModelCtrl) {
+		//Initialize the timepicker
+		element.timepicker();
+
+		element.change(function() {
+			ngModelCtrl.$setViewValue(moment(scope.day + $(this).val(), 'YYYY-MM-DDh:mma').format());
+			scope.$apply();
+		});
+
+		$('#start-time').change(function() {
+			ngModelCtrl.$setViewValue(moment(scope.day + element.val(), 'YYYY-MM-DDh:mma').format());
+			scope.$apply();
+		});
+	};
+
+	return {
+		require : 'ngModel',
+		restrict: 'C',
+		link: linker
+	};
+});
 
 //---------------
 // Services
