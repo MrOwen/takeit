@@ -63,6 +63,19 @@ angular.module('takeIt.controllers', []).
 			return "unknown";
 		}
 
+		$scope.shiftAllowTake = function(shift) {
+			switch(shiftTriage(shift)) {
+				case "warn":
+					return true;
+				case "upcoming":
+					return true;
+				case "taken":
+					return false;
+				case "passed":
+					return false;
+			}
+		};
+
 		$scope.addShift = function() {
 			var shiftDate = moment(postShiftData.start_date).format("YYYY-MM-DD");
 			if (typeof shifts[shiftDate] == "undefined") {
@@ -77,6 +90,12 @@ angular.module('takeIt.controllers', []).
 			});
 			postShiftData.start_date = null;
 			postShiftData.end_date = null;
+		};
+
+		$scope.takeShift = function(shift) {
+			shift.taker = "Bob the builder";
+			shift.date_taken = moment().format();
+			console.log(shifts);
 		};
 	});
 
