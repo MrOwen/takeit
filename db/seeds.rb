@@ -23,10 +23,10 @@ shifts = Event.create([
 	{poster: User.find_by_id(1),
 	 taker: nil,
 	 taken_datetime: nil,
-	 start_datetime: '2013-04-10T07:00:00-05:00',
-	 end_datetime: '2013-04-10T09:00:00-05:00'},
+	 start_datetime: '2013-04-24T07:00:00-05:00',
+	 end_datetime: '2013-04-24T09:00:00-05:00'},
 	{poster: User.find_by_id(2),
 	 taker: User.find_by_id(1),
-	 taken_datetime: '2013-02-10T013:00:00-05:00',
-	 start_datetime: '2013-04-15T16:00:00-05:00',
-	 end_datetime: '2013-04-15T18:00:00-05:00'}])
+	 taken_datetime: '2013-04-29T013:00:00-05:00',
+	 start_datetime: '2013-05-01T16:00:00-05:00',
+	 end_datetime: '2013-01-01T18:00:00-05:00'}])
