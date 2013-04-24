@@ -7,7 +7,7 @@ Takeit::Application.routes.draw do
 
   match "calendar", to: 'events#calendar', as: "calendar"
   match "cal_data.json", to: 'events#calendar', format: "json"
-  #match "cal_data.json", to: 'events#index'
+  resources :events
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
