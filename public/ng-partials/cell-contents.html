@@ -1,5 +1,5 @@
-<div class="label">{{dateExtract(day)}}</div>
-<div class="pull-right"><button class="btn btn-mini popover-handler popover-direction" type="button" data-title="Post shift" bs-popover="'/ng-partials/add-shift.html'" data-unique="1"><i class="icon-plus-sign"></i></button></div>
+<div class="label">{{extractDay(day)}}</div>
+<div class="pull-right" ng-show="allowAddShift(day)"><button class="btn btn-mini popover-handler popover-direction" type="button" data-title="Post shift" bs-popover="'/ng-partials/add-shift.html'" data-unique="1"><i class="icon-plus-sign"></i></button></div>
 <div class="cal-day-content">
-	<a href="#" ng-repeat="shift in shiftsExtract(day) | orderBy:'start_date'" class="btn btn-block popover-handler popover-direction" ng-class="buttonColorer(shift)" data-title="{{getPopoverTitle(shift)}}" bs-popover="'/ng-partials/shift-popover.html'" data-unique="1" data-container="body">{{shift.start_date | date:'h:mm'}}-{{shift.end_date | date:'h:mm a'}}</a>
+	<a href="" ng-repeat="shift in shiftsExtract(day) | orderBy:'start_date'" class="btn btn-block popover-handler popover-direction" ng-class="buttonColorer(shift)" data-title="{{getPopoverTitle(shift)}}" bs-popover="'/ng-partials/shift-popover.html'" data-unique="1" data-container="body">{{shift.start_date | date:'h:mm'}}-{{shift.end_date | date:'h:mm a'}}</a>
 </div>
