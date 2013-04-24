@@ -8,6 +8,7 @@ angular.module('takeIt.controllers', []).
 		$http.get('/cal_data.json').success(function(data) {
 			days = $scope.days = data.calendar_days;
 			shifts = $scope.shifts = data.shifts;
+			user_data = $scope.user_data = data.user_data;
 		});
 
 		postShiftData = $scope.postShiftData = {
@@ -19,7 +20,7 @@ angular.module('takeIt.controllers', []).
 			return shifts[date];
 		};
 
-		$scope.dateExtract = function(date) {
+		$scope.extractDay = function(date) {
 			//.date() actually resolves to the day of the month as a number
 			return moment(date).date();
 		};
@@ -50,6 +51,10 @@ angular.module('takeIt.controllers', []).
 			return "Unknown status";
 		};
 
+		$scope.allowAddShift = function(date) {
+			return moment(date).isAfter(moment(), 'day') || moment(date).isSame(moment(), 'day');
+		};
+
 		function shiftTriage(shift) {
 			if (shift.taker === null && (moment(shift.start_date).diff(moment(), 'hours') <= 24 && moment(shift.start_date).diff(moment(), 'hours') >= 0)) {
 				return "warn";
@@ -77,43 +82,57 @@ angular.module('takeIt.controllers', []).
 		};
 
 		$scope.addShift = function() {
-			var shiftDate = moment(postShiftData.start_date).format("YYYY-MM-DD");
-			if (typeof shifts[shiftDate] == "undefined") {
-				shifts[shiftDate] = [];
-			}
-			shifts[shiftDate].push({
-				"start_date": postShiftData.start_date,
-				"end_date": postShiftData.end_date,
-				"date_taken": null,
-				"poster": "Owen sdjfhskjd",
-				"taker": null
+			$http.post("/events.json", {"event": {
+				"start_datetime": postShiftData.start_date,
+				"end_datetime": postShiftData.end_date,
+				"poster": user_data.email
+			}}, {"headers": {"Content-Type": "application/json"}}).
+			success(function(data, status, headers, config) {
+				var shiftDate = moment(data.start_datetime).format("YYYY-MM-DD");
+				if (typeof shifts[shiftDate] == "undefined") {
+					shifts[shiftDate] = [];
+				}
+				shifts[shiftDate].push({
+					"shift_id": data.id,
+					"start_date": data.start_datetime,
+					"end_date": data.end_datetime,
+					"date_taken": null,
+					"date_posted": data.created_at,
+					"poster": data.poster.name,
+					"taker": null
+				});
+				postShiftData.start_date = null;
+				postShiftData.end_date = null;
+			}).
+			error(function(data, status, headers, config) {
+				console.log("There was a problem posting the shift");
 			});
-			postShiftData.start_date = null;
-			postShiftData.end_date = null;
 		};
 
 		$scope.takeShift = function(shift) {
-			shift.taker = "Bob the builder";
-			shift.date_taken = moment().format();
-			console.log(shifts);
+			taken_date = moment().format();
+			$http.put("/events/"+shift.shift_id+".json", {"event": {
+				"taken_datetime": taken_date,
+				"taker": user_data.email
+			}}, {"headers": {"Content-Type": "application/json"}}).
+			success(function(data, status, headers, config) {
+				shift.taker = user_data.name;
+				shift.date_taken = taken_date;
+			}).
+			error(function(data, status, headers, config) {
+				console.log("There was a problem editing the shift");
+				console.log(data);
+			});
+		};
+
+		$scope.getTakenSinceTime = function(date) {
+			return date ? moment(date).fromNow() : null;
 		};
 	});
 
 //---------------
 // Filters
 //---------------
-
-//Wraps moment.js functions that TakeIt needs
-angular.module('takeIt.filters', []).
-	filter('dateExtract', function() {
-		return function(dates) {
-			var extractedDates = [];
-			angular.forEach(dates, function(date) {
-				extractedDates.push(moment(date, "YYYY-MM-DD").date());
-			}, extractedDates);
-			return extractedDates;
-		};
-	});
 
 //---------------
 // Directives
@@ -148,7 +167,7 @@ takeIt.directive('popoverDirection', function() {
 	var linker = function(scope, element, attrs) {
 		var position = element.position();
 
-		if ($(window).width()-position.left < 400) {
+		if ($(window).width()-position.left < 450) {
 			attrs.$set("data-placement", "left");
 		} else {
 			attrs.$set("data-placement", "right");
