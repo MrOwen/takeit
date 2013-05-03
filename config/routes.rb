@@ -1,6 +1,6 @@
 Takeit::Application.routes.draw do
 
-  root to: 'events#calendar'
+  root to: "users#login"
   match "auth/:provider/callback", to: 'sessions#create'
   match "auth/failure", to: redirect("/")
   match "signout", to: "sessions#destroy", as: "signout"
@@ -8,6 +8,8 @@ Takeit::Application.routes.draw do
   match "calendar", to: 'events#calendar', as: "calendar"
   match "cal_data.json", to: 'events#calendar', format: "json"
   resources :events
+  resources :users
+  match 'login' => 'users#login', as: "login"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
