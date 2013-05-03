@@ -10,6 +10,10 @@ angular.module('takeIt.controllers', []).
 			shifts = $scope.shifts = data.shifts;
 			user_data = $scope.user_data = data.user_data;
 		});
+		$http.get('users.json').success(function(data) {
+			users = $scope.users = data.users;
+			console.log($scope.users);
+		})
 
 		postShiftData = $scope.postShiftData = {
 			"start_date": null,
@@ -128,6 +132,19 @@ angular.module('takeIt.controllers', []).
 		$scope.getTakenSinceTime = function(date) {
 			return date ? moment(date).fromNow() : null;
 		};
+
+		$scope.editRole = function(user, new_role) {
+			$http.put("/users/"+user.id+".json", {"user": {
+				"role": new_role
+			}}, {"headers": {"Content-Type": "application/json"}}).
+			success(function(data, status, headers, config) {
+				user.role = new_role;
+			}).
+			error(function(data, status, headers, config) {
+				console.log("There was a problem editing the role");
+				console.log(data);
+			});
+		}
 	});
 
 //---------------
