@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+	#load_and_authorize_resource
 	respond_to :json, :html
 
 	def calendar
@@ -27,7 +28,7 @@ class EventsController < ApplicationController
 		end
 	end
 
-	# PUT /orders/1.json
+	# PUT /events/1.json
 	def update
 		params[:event][:taker] = User.find_by_email(params[:event][:taker])
 		@event = Event.find(params[:id])
