@@ -1,7 +1,7 @@
 <p>
 	<strong>{{shift.poster}}</strong> posted this shift:
 	<br />
-	<em>{{shift.date_posted | date:'medium'}}</em>
+	<a href="" bs-tooltip="shift.date_posted | date:'medium'" data-placement="top">{{getTakenSinceTime(shift.date_posted)}}</a>
 </p>
 <div ng-show="shiftAllowTake(shift)">
 	<button class="btn btn-primary" ng-click="takeShift(shift);dismiss()"><i class="icon-ok icon-white"></i> Take shift</button>
@@ -11,7 +11,7 @@
 	<p>
 		<strong>{{shift.taker}}</strong> took this shift:
 		<br />
-		<a href="" bs-tooltip="shift.date_taken | date:'medium'" data-placement="bottom">{{getTakenSinceTime(shift.date_taken)}}</a>
+		<a href="" bs-tooltip="shift.date_taken | date:'medium'" data-placement="top">{{getTakenSinceTime(shift.date_taken)}}</a>
 	</p>
 </div>
 
