@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :role, :name, :email, :provider, :uid, :avatar_url
+  attr_accessible :role, :name, :email
 
   has_many :events, foreign_key: 'poster'
   has_many :events_taken, class_name: 'Event', foreign_key: 'taker'
@@ -17,5 +17,10 @@ class User < ActiveRecord::Base
   		user.provider = auth["provider"]
   		user.role = "inactive"
   	end
+  end
+
+  ROLES = %w[inactive active manager]
+  def role?(base_role)
+    role.present? && ROLES.index(base_role.to_s) <= ROLES.index(role)
   end
 end
