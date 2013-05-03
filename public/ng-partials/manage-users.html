@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3>Manage Users</h3>
+</div>
+<div class="modal-body">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in users">
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td><div class="btn-group" ng-model="user.role" ng-change="editRole(user, user.role)" bs-buttons-radio>
+                    <button type="button" class="btn btn-mini" value="inactive">Inactive</button>
+                    <button type="button" class="btn btn-mini" value="active">Active</button>
+                    <button type="button" class="btn btn-mini" value="manager">Manager</button>
+                </div></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" ng-click="hide()">Done</button>
+</div>
