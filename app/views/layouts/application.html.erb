@@ -11,21 +11,33 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<div class="container">
+	<div class="container" ng-controller="CalCtrl">
 		<div class="row-fluid takeit-header">
 			<div class="span12">
-				<%# flash.each do |name, msg| %>
-					<%#= content_tag :div, msg, id: "flash_#{name}" %>
-				<%# end %>
 				<% if current_user %>
-					<div class="pull-right">Hi <%= current_user.name %>!<br /><%= link_to "Sign out?", signout_path %></div>
-				<% else %>
-					<div class="pull-right"><%= link_to "Login with Google", "auth/google_oauth2", class: "btn btn-info" %></div>
+					<div class="pull-right">
+                        Hi <%= current_user.name %>!
+                        <% if current_user.role == 'manager' %>
+                            <br />
+                            <a href="" bs-modal="'/ng-partials/manage-users.html'">Manage users</a>
+                        <% end %>
+                        <br />
+                        <%= link_to "Sign out?", signout_path %>
+                    </div>
 				<% end %>
 			</div>
 		</div>
 		<%= yield %>
 	</div>
-
+    <script>
+        $(".ajax-popup-link").magnificPopup({
+            type: 'ajax'
+        });
+        //Angular.js codes
+        //Define an Angular module for takeIt
+        var takeIt = angular.module('takeit', ['takeIt.controllers', '$strap.directives']);
+    </script>
+    <%= javascript_include_tag 'takeit' %>
+    <%= javascript_include_tag 'angular-strap.min' %>
 </body>
 </html>
