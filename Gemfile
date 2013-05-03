@@ -39,5 +39,6 @@ gem 'jquery-rails'
 
 gem 'omniauth-google-oauth2'
 gem 'pg', :group => :production
+gem 'cancan'
 
 #gem 'rails-footnotes', '>= 3.7.9', :group => :development
